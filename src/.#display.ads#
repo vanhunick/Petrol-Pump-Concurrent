@@ -1,0 +1,7 @@
+package Display with SPARK_Mode => on is
+
+
+function Create return ;
+
+
+end Display;

@@ -35,7 +35,7 @@ package Custom_Types with SPARK_Mode => on is
                   SUSPEND_FP, -- Moves into SUSPENDED_STARTED State
                   TERMINATE_FP, -- Forces FP to move to IDLE State
                   RESUME_FP, -- Back to started state
-                  LIMIT_REACHED, -- Max allowed limit has been pumped changes to Suspended fueling
+                  LIMIT_REACHED -- Max allowed limit has been pumped changes to Suspended fueling
                  );
 
 end Custom_Types;
