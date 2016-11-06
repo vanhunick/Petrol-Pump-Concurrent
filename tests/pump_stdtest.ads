@@ -1,7 +1,7 @@
 with AUnit;
 with AUnit.Test_Cases;
 
-package Train_Stdtest is
+package Pump_Stdtest is
 
    type TC is new AUnit.Test_Cases.Test_Case with null record;
 
@@ -20,4 +20,4 @@ package Train_Stdtest is
    procedure Register_Tests (T: in out TC);
    function Name (T: TC) return AUnit.Message_String;
 
-end Train_Stdtest;
+end Pump_Stdtest;
