@@ -27,8 +27,10 @@ package Pump_Controllers with SPARK_Mode => on is
    procedure Resume_FP(Pump : in out Pump_FSM);
    procedure Limit_Reached(Pump : in out Pump_FSM);
 
-
 private
+
+   procedure Set_State(Pump : in out Pump_FSM; S : State);
+
    type Pump_FSM is
       record
          Cur_State : State;

@@ -12,8 +12,71 @@ package body Pump_Controllers with SPARK_Mode => on is
 
    procedure Event(Pump : in out Pump_FSM; E : in Custom_Types.Event) is
    begin
-      null;
+      case Pump.Cur_State is
+         when CLOSED => -- CLOSED STATE
+            case E is
+               when Open_FP => Set_State(Pump,IDLE); -- Change state from CLOSED to IDLE
+               when others => null;
+            end case;
+
+         when IDLE =>  -- IDLE STATE
+            case E is
+               when Valid_Nozzle_Up => Set_State(Pump,CALLING); -- Change state from IDLE to CALLING
+               when Release_FP => Set_State(Pump,AUTHORISED); -- Change state from IDLE to AUTHORISED
+               when others => null;
+
+            end case;
+
+         when CALLING =>  -- IDLE STATE
+            case E is
+               when Nozzle_Down | Terminate_FP => Set_State(Pump,IDLE); -- Change state from CALLING to IDLE
+               when Close_FP => Set_State(Pump,CLOSED); -- Change state from CALLING to CLOSED
+               when Release_FP => Set_State(Pump, STARTED); -- Change state from CALLING to STARTED
+               when others => null;
+            end case;
+
+         when AUTHORISED =>  -- AUTHORISED STATE
+            case E is
+               when Terminate_FP => Set_State(Pump,IDLE); -- Change state from AUTHORISED to IDLE
+               when Close_FP => Set_State(Pump,CLOSED); -- Change state from AUTHORISED to CLOSED
+               when Valid_Nozzle_Up => Set_State(Pump, STARTED); -- Change state from AUTHORISED to STARTED
+               when others => null;
+            end case;
+
+
+         when STARTED =>  -- STARTED STATE
+            case E is
+               when Terminate_FP => Set_State(Pump,IDLE); -- Change state from STARTED to IDLE
+               when Close_FP => Set_State(Pump,CLOSED); -- Change state from STARTED to CLOSED
+               when Nozzle_Down => Set_State(Pump, IDLE); -- Change state from STARTED to IDLE
+               when First_Volume_Pulses => Set_State(Pump, FUELING); -- Change state from STARTED to FUELING
+               when others => null;
+            end case;
+
+         when FUELING =>  -- STARTED STATE
+            case E is
+               when Terminate_FP => Set_State(Pump,IDLE); -- Change state from FUELING to IDLE
+               when Close_FP => Set_State(Pump,CLOSED); -- Change state from FUELING to CLOSED
+               when Nozzle_Down => Set_State(Pump, IDLE); -- Change state from FUELING to IDLE
+               when Limit_Reached | Suspend_FP | Tank_Full => Set_State(Pump, Suspended_Fueling); -- Change state from FUELING to Suspended Fueling
+               when others => null;
+            end case;
+
+
+         when SUSPENDED_FUELING =>  -- SUSPENDED FUELING STATE
+            case E is
+               when Close_FP => Set_State(Pump,CLOSED); -- Change state from SUSPENDED_FUELING to CLOSED
+               when Nozzle_Down | Terminate_FP => Set_State(Pump,IDLE); -- Change state from SUSPENDED_FUELING to IDLE
+               when Resume_FP => Set_State(Pump, Suspended_Fueling); -- Change state from SUSPENDED_FUELING to Fueling
+               when others => null;
+            end case;
+
+         when others => null;
+      end case;
    end Event;
+
+
+
 
 
    procedure Minor_Error(Pump : in out Pump_FSM) is
@@ -95,6 +158,10 @@ package body Pump_Controllers with SPARK_Mode => on is
 
 
 
+   procedure Set_State(Pump : in out Pump_FSM; S : State) is
+   begin
+      Pump.Cur_State := s;
+   end Set_State;
 
 
 end Pump_Controllers;
