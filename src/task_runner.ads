@@ -1,12 +1,21 @@
-pragma Profile (Ravenscar);
-pragma Partition_Elaboration_Policy (Sequential);
-
-with Pumps;
-
-package Task_Runner is
-   Pump1 : Pump;
-   Pump2 : Pump;
-
-  Pump_Task1 : Pumps.Pump_Task(Pump1);-- No clue if right
-  Pump_Task2 : Pumps.Pump_Task(Pump2);
+  pragma Profile (Ravenscar);
+  pragma Partition_Elaboration_Policy (Sequential);
+--
+--  with Forecourt; use forecourt;
+--
+--  with Pumps; use Pumps;
+--
+--
+--
+  package Task_Runner is
+--     PD1 : Pump_Data;
+--     PD2 : Pump_Data;
+--
+--     PR1 : Protected_Record;
+--     PR2 : Protected_Record;
+--
+--  begin
+--     PR1.Set_Data(PD1);
+--
+--
 end Task_Runner;

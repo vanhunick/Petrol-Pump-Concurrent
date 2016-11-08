@@ -2,6 +2,8 @@ package Custom_Types with SPARK_Mode => on is
 
    type Money is digits 2;
 
+--     type Suspend_Ob is access Suspension_Object;
+
    -- The possible states
    type State is (
                   INOPRATIVE, -- Something has gone wrong or the fuel point does not have all the data
@@ -35,7 +37,8 @@ package Custom_Types with SPARK_Mode => on is
                   SUSPEND_FP, -- Moves into SUSPENDED_STARTED State
                   TERMINATE_FP, -- Forces FP to move to IDLE State
                   RESUME_FP, -- Back to started state
-                  LIMIT_REACHED -- Max allowed limit has been pumped changes to Suspended fueling
+                  LIMIT_REACHED, -- Max allowed limit has been pumped changes to Suspended fueling
+                  TANK_FULL -- MAX reached for tank
                  );
 
 end Custom_Types;

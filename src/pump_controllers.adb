@@ -1,167 +1,102 @@
 with Custom_Types; use Custom_Types;
+with Forecourt; use Forecourt;
+with FSMs; use FSMs;
+with System; use System;
 
-package body Pump_Controllers with SPARK_Mode => on is
+package body Pump_Controllers is
 
-   function Create return Pump_FSM is
-      Pump : Pump_FSM;
+     procedure Set_Event(New_Event : Custom_Types.Event) is
+     begin
+      --          Pump_Task.E := New_Event;
+      null;
+     end Set_Event;
+
+
+   task body Pump_1_Task is
+      D : Pump_Data; -- Temp pump data
    begin
-      Pump.Cur_State := INOPRATIVE;
-      return Pump;
-   end Create;
+      loop
+
+      D := Forecourt.P1.Get_Data;
+
+      if not D.Responded then
+         FSMS.Event(D.FSM, D.Cur_Event); -- Send the event to FSM
+         D.Responded := True; -- Update the data
+         Forecourt.P1.Set_Data(D); -- Set the data
+      end if;
+
+      end loop;
+   end Pump_1_Task;
 
 
-   procedure Event(Pump : in out Pump_FSM; E : in Custom_Types.Event) is
+   task body Pump_2_Task is
+      D : Pump_Data; -- Temp pump data
    begin
-      case Pump.Cur_State is
-         when CLOSED => -- CLOSED STATE
-            case E is
-               when Open_FP => Set_State(Pump,IDLE); -- Change state from CLOSED to IDLE
-               when others => null;
-            end case;
+      loop
+      D := Forecourt.P2.Get_Data;
 
-         when IDLE =>  -- IDLE STATE
-            case E is
-               when Valid_Nozzle_Up => Set_State(Pump,CALLING); -- Change state from IDLE to CALLING
-               when Release_FP => Set_State(Pump,AUTHORISED); -- Change state from IDLE to AUTHORISED
-               when others => null;
+      if not D.Responded then
+         FSMS.Event(D.FSM, D.Cur_Event); -- Send the event to FSM
+         D.Responded := True; -- Update the data
+         Forecourt.P2.Set_Data(D); -- Set the data
+      end if;
+      end loop;
+   end Pump_2_Task;
 
-            end case;
-
-         when CALLING =>  -- IDLE STATE
-            case E is
-               when Nozzle_Down | Terminate_FP => Set_State(Pump,IDLE); -- Change state from CALLING to IDLE
-               when Close_FP => Set_State(Pump,CLOSED); -- Change state from CALLING to CLOSED
-               when Release_FP => Set_State(Pump, STARTED); -- Change state from CALLING to STARTED
-               when others => null;
-            end case;
-
-         when AUTHORISED =>  -- AUTHORISED STATE
-            case E is
-               when Terminate_FP => Set_State(Pump,IDLE); -- Change state from AUTHORISED to IDLE
-               when Close_FP => Set_State(Pump,CLOSED); -- Change state from AUTHORISED to CLOSED
-               when Valid_Nozzle_Up => Set_State(Pump, STARTED); -- Change state from AUTHORISED to STARTED
-               when others => null;
-            end case;
-
-
-         when STARTED =>  -- STARTED STATE
-            case E is
-               when Terminate_FP => Set_State(Pump,IDLE); -- Change state from STARTED to IDLE
-               when Close_FP => Set_State(Pump,CLOSED); -- Change state from STARTED to CLOSED
-               when Nozzle_Down => Set_State(Pump, IDLE); -- Change state from STARTED to IDLE
-               when First_Volume_Pulses => Set_State(Pump, FUELING); -- Change state from STARTED to FUELING
-               when others => null;
-            end case;
-
-         when FUELING =>  -- STARTED STATE
-            case E is
-               when Terminate_FP => Set_State(Pump,IDLE); -- Change state from FUELING to IDLE
-               when Close_FP => Set_State(Pump,CLOSED); -- Change state from FUELING to CLOSED
-               when Nozzle_Down => Set_State(Pump, IDLE); -- Change state from FUELING to IDLE
-               when Limit_Reached | Suspend_FP | Tank_Full => Set_State(Pump, Suspended_Fueling); -- Change state from FUELING to Suspended Fueling
-               when others => null;
-            end case;
-
-
-         when SUSPENDED_FUELING =>  -- SUSPENDED FUELING STATE
-            case E is
-               when Close_FP => Set_State(Pump,CLOSED); -- Change state from SUSPENDED_FUELING to CLOSED
-               when Nozzle_Down | Terminate_FP => Set_State(Pump,IDLE); -- Change state from SUSPENDED_FUELING to IDLE
-               when Resume_FP => Set_State(Pump, Suspended_Fueling); -- Change state from SUSPENDED_FUELING to Fueling
-               when others => null;
-            end case;
-
-         when others => null;
-      end case;
-   end Event;
-
-
-
-
-
-   procedure Minor_Error(Pump : in out Pump_FSM) is
+   task body Pump_3_Task is
+      D : Pump_Data; -- Temp pump data
    begin
-      Event(Pump,MINOR_ERROR);
-   end Minor_Error;
+      loop
+      D := Forecourt.P3.Get_Data;
 
+      if not D.Responded then
+         FSMS.Event(D.FSM, D.Cur_Event); -- Send the event to FSM
+         D.Responded := True; -- Update the data
+         Forecourt.P3.Set_Data(D); -- Set the data
+      end if;
+      end loop;
+   end Pump_3_Task;
 
-   procedure Major_Error(Pump : in out Pump_FSM) is
+   task body Pump_4_Task is
+      D : Pump_Data; -- Temp pump data
    begin
-      Event(Pump,MAJOR_ERROR);
-   end Major_Error;
+      loop
+         D := Forecourt.P4.Get_Data;
 
-   procedure Operate(Pump : in out Pump_FSM) is
+         if not D.Responded then
+            FSMS.Event(D.FSM, D.Cur_Event); -- Send the event to FSM
+            D.Responded := True; -- Update the data
+            Forecourt.P4.Set_Data(D); -- Set the data
+         end if;
+      end loop;
+   end Pump_4_Task;
+
+   task body Pump_5_Task is
+      D : Pump_Data; -- Temp pump data
    begin
-      Event(Pump,OPERATIVE);
-   end Operate;
+      loop
+         D := Forecourt.P5.Get_Data;
 
-   procedure Unable(Pump : in out Pump_FSM) is
+         if not D.Responded then
+            FSMS.Event(D.FSM, D.Cur_Event); -- Send the event to FSM
+            D.Responded := True; -- Update the data
+            Forecourt.P5.Set_Data(D); -- Set the data
+         end if;
+      end loop;
+   end Pump_5_Task;
+
+   task body Pump_6_Task is
+      D : Pump_Data; -- Temp pump data
    begin
-      Event(Pump,UNABLE);
-   end Unable;
+      loop
+         D := Forecourt.P6.Get_Data;
 
-   procedure Open_FP(Pump : in out Pump_FSM) is
-   begin
-      Event(Pump,OPEN_FP);
-   end Open_FP;
-
-   procedure Valid_Nozzle_Up(Pump : in out Pump_FSM) is
-   begin
-      Event(Pump,VALID_NOZZLE_UP);
-   end Valid_Nozzle_Up;
-
-
-   procedure Invalid_Nozzle_Up(Pump : in out Pump_FSM) is
-   begin
-      Event(Pump,INVALID_NOZZLE_UP);
-   end Invalid_Nozzle_Up;
-
-   procedure Release_FP(Pump : in out Pump_FSM) is
-   begin
-      Event(Pump,RELEASE_FP);
-   end Release_FP;
-
-   procedure Close_FP(Pump : in out Pump_FSM) is
-   begin
-      Event(Pump,Close_FP);
-   end Close_FP;
-
-   procedure Nozzle_Down(Pump : in out Pump_FSM) is
-   begin
-      Event(Pump,NOZZLE_DOWN);
-   end Nozzle_Down;
-
-   procedure First_Volume_Pulses(Pump : in out Pump_FSM) is
-   begin
-      Event(Pump,FIRST_VOLUME_PULSES);
-   end First_Volume_Pulses;
-
-   procedure Suspend_FP(Pump : in out Pump_FSM) is
-   begin
-      Event(Pump,Suspend_FP);
-   end Suspend_FP;
-
-   procedure Terminate_FP(Pump : in out Pump_FSM) is
-   begin
-      Event(Pump,Terminate_FP);
-   end Terminate_FP;
-
-   procedure Resume_FP(Pump : in out Pump_FSM) is
-   begin
-      Event(Pump,RESUME_FP);
-   end Resume_FP;
-
-   procedure Limit_Reached(Pump : in out Pump_FSM) is
-   begin
-      Event(Pump,LIMIT_REACHED);
-   end Limit_Reached;
-
-
-
-   procedure Set_State(Pump : in out Pump_FSM; S : State) is
-   begin
-      Pump.Cur_State := s;
-   end Set_State;
-
+         if not D.Responded then
+            FSMS.Event(D.FSM, D.Cur_Event); -- Send the event to FSM
+            D.Responded := True; -- Update the data
+            Forecourt.P6.Set_Data(D); -- Set the data
+         end if;
+      end loop;
+   end Pump_6_Task;
 
 end Pump_Controllers;
