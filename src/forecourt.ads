@@ -1,5 +1,5 @@
---  pragma Profile (Ravenscar);
---  pragma Partition_Elaboration_Policy (Sequential);
+pragma Profile (Ravenscar);
+pragma Partition_Elaboration_Policy (Sequential);
 
 with Pump_Controllers; use Pump_Controllers;
 with FSMs; use FSMs;
@@ -51,7 +51,6 @@ package forecourt is
       Data : Pump_Data;
    end Protected_Record;
 
-
    P1 : Protected_Record;
    P2 : Protected_Record;
    P3 : Protected_Record;
@@ -59,13 +58,11 @@ package forecourt is
    P5 : Protected_Record;
    P6 : Protected_Record;
 
-
-   Pump1 : Pump_1_Task(1,200);
---     Pump2 : Pump_2_Task(10,100);
---     Pump3 : Pump_3_Task(10,100);
---     Pump4 : Pump_4_Task(10,100);
---     Pump5 : Pump_5_Task(10,100);
---     Pump6 : Pump_6_Task(10,100);
-
+   Pump1 : Pump_1_Task(10,100);
+   Pump2 : Pump_2_Task(10,100);
+   Pump3 : Pump_3_Task(10,100);
+   Pump4 : Pump_4_Task(10,100);
+   Pump5 : Pump_5_Task(10,100);
+   Pump6 : Pump_6_Task(10,100);
 
 end forecourt;

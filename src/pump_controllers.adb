@@ -2,6 +2,7 @@ with Custom_Types; use Custom_Types;
 with Forecourt; use Forecourt;
 with FSMs; use FSMs;
 with System; use System;
+with Epoch; use Epoch;
 
 package body Pump_Controllers is
 
@@ -14,8 +15,19 @@ package body Pump_Controllers is
 
    task body Pump_1_Task is
       D : Pump_Data; -- Temp pump data
+
+      Next_Period : Ada.Real_Time.Time;
+      Period : constant Ada.Real_Time.Time_Span := Ada.Real_Time.Microseconds(Cycle_Time);
+      Hang_Period : constant Ada.Real_Time.Time_Span := Ada.Real_Time.Microseconds(Cycle_Time *10);
+      Start_Epoch : Ada.Real_Time.Time := Epoch.PEpoch.Start_Time;
+
    begin
+
+      Next_Period := Start_Epoch + Period;
+
       loop
+         delay until Next_Period;
+         Next_Period := Next_Period + Period;
 
       D := Forecourt.P1.Get_Data;
 

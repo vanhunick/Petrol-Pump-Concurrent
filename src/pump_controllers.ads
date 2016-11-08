@@ -1,6 +1,12 @@
+pragma Profile (Ravenscar);
+pragma Partition_Elaboration_Policy (Sequential);
+
 with Custom_Types;
 with System;
 with Ada.Real_Time;  use Ada.Real_Time;
+
+
+
 
 package Pump_Controllers is
 
