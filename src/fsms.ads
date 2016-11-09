@@ -2,16 +2,13 @@ with Custom_Types; use Custom_Types;
 
 package FSMs with SPARK_Mode => on is
 
-
    type Pump_FSM is private;
 
    function create return Pump_FSM;
 
    procedure Event(Pump : in out Pump_FSM; E : in Event);
 
-
    function Get_State(FSM : Pump_FSM) return State;
-
 
    -- Create procedures for all of the possible events/interupts
    procedure Minor_Error(Pump : in out Pump_FSM);
@@ -29,6 +26,8 @@ package FSMs with SPARK_Mode => on is
    procedure Terminate_FP(Pump : in out Pump_FSM);
    procedure Resume_FP(Pump : in out Pump_FSM);
    procedure Limit_Reached(Pump : in out Pump_FSM);
+   procedure Clear(Pump : in out Pump_FSM);
+
 
 private
 

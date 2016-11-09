@@ -61,8 +61,15 @@ package body Pump_Units is
 
 
          -- If we have not responded to the event, respond and set responded to true
-         if not D.Responded then
+         if not PD.Responded then
             FSMs.Event(PD.FSM,PD.E);
+
+            -- Check if the transaction should be cleated
+            if PD.E = CLEAR then
+               PD.Cost := 0.00;
+               PD.Pumped := 0.00;
+            end if;
+
             PD.Responded := True;
             forecourt.PU_1_Data.Set_Data(PD);
          end if;
@@ -120,14 +127,18 @@ package body Pump_Units is
          -- Check pump 6 for events
          D := Forecourt.P6.Get_Data;
 
-         if not D.Responded then
+         if not PD.Responded then
             FSMs.Event(PD.FSM, D.Cur_Event); -- Send the event to FSM
             D.Responded := True; -- Update the data
+
+            -- Check if the transaction should be cleated
+            if PD.E = CLEAR then
+               PD.Cost := 0.00;
+               PD.Pumped := 0.00;
+            end if;
+
             Forecourt.P6.Set_Data(D); -- Set the data
          end if;
-
-
-
 
       end loop;
    end Pump_Unit_2_Task;
