@@ -1,7 +1,26 @@
-package Pump_Units
+pragma Profile (Ravenscar);
+pragma Partition_Elaboration_Policy (Sequential);
+
+with Custom_Types; use Custom_Types;
+with Pump_Controllers; use Pump_Controllers;
+with Custom_Types; use Custom_Types;
+with System; use System;
+--  with forecourt; use forecourt;
+with FSMs; use FSMs;
 
 
-   type Pump_Unit_1 is
+package Pump_Units is
+
+   -- Event and state daya for each pump
+   type Pump_Data is record
+      FSM : Pump_FSM := FSMs.create;
+      Cur_Event : Custom_Types.Event := Terminate_FP;
+      Responded : Boolean := True;
+      Pumping_Fuel : Boolean := False;
+   end record;
+
+   -- Protected wrapper for pump data
+   protected type Protected_Record is
 
       function Get_Data return Pump_Data;
 
@@ -12,6 +31,29 @@ package Pump_Units
    end Protected_Record;
 
 
+   protected type Pump_Unit_1 is
+
+      function Get_Data return Pump_Data;
+
+      -- Procedure used to activate or deactivate a pump
+      procedure Activate_Pump(Activate : Boolean);
+
+      --procedure Event(E : Custom_Types.Event);
+
+   private
+      Data : Pump_Data;
+      FSM : Pump_FSM;
+
+      -- Cam asses the global data objects
+   end Pump_Unit_1;
 
 
-end Pump_Unit;
+   -- Create a task that checks for changes to data
+   task type Pump_Unit_1_Task(Pri: System.Priority; C_Time : Positive);
+
+
+
+
+
+
+end Pump_Units;

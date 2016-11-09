@@ -26,6 +26,4 @@ package Pump_Controllers is
    task type Pump_6_Task(Pri: System.Priority; C_Time : Positive);
 
 
-   procedure Set_Event(New_Event : Custom_Types.Event);
-
 end Pump_Controllers;

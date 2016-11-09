@@ -5,6 +5,8 @@ with Pump_Controllers; use Pump_Controllers;
 with FSMs; use FSMs;
 with Ada.Synchronous_Task_Control; use Ada.Synchronous_Task_Control;
 with Custom_Types; use Custom_Types;
+with Pump_Units; use Pump_Units;
+
 package forecourt is
 
       -- Dispenser 1
@@ -35,21 +37,22 @@ package forecourt is
 
    Event_1, Event_2,Event_3,Event_4,Event_5,Event_6 : Custom_Types.Event;
 
-   type Pump_Data is record
-      FSM : Pump_FSM := FSMs.create;
-      Cur_Event : Custom_Types.Event := Terminate_FP;
-      Responded : Boolean := True;
-   end record;
-
-   protected type Protected_Record is
-
-      function Get_Data return Pump_Data;
-
-      procedure Set_Data(PD : Pump_Data);
-
-   private
-      Data : Pump_Data;
-   end Protected_Record;
+--     type Pump_Data is record
+--        FSM : Pump_FSM := FSMs.create;
+--        Cur_Event : Custom_Types.Event := Terminate_FP;
+--        Responded : Boolean := True;
+--        Pumping_Fuel : Boolean := False;
+--     end record;
+--
+--     protected type Protected_Record is
+--
+--        function Get_Data return Pump_Data;
+--
+--        procedure Set_Data(PD : Pump_Data);
+--
+--     private
+--        Data : Pump_Data;
+--     end Protected_Record;
 
    P1 : Protected_Record;
    P2 : Protected_Record;
@@ -64,5 +67,9 @@ package forecourt is
    Pump4 : Pump_4_Task(10,100);
    Pump5 : Pump_5_Task(10,100);
    Pump6 : Pump_6_Task(10,100);
+
+   PU_1 : Pump_Unit_1;
+--     PU_2 : Pump_Unit_2;
+
 
 end forecourt;
