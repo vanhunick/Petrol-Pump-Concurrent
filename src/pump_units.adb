@@ -6,8 +6,6 @@ with Epoch; use Epoch;
 with Pump_Units; use Pump_Units;
 with Ada.Real_Time; use Ada.Real_Time;
 
-
-
 package body Pump_Units is
 
    -- Task for the first pump unit
@@ -77,7 +75,7 @@ package body Pump_Units is
          -- Check if fueling if so increment cost and amount
          if FSMs.Get_State(PD.FSM) = FUELING then
             PD.Pumped := PD.Pumped + 0.01;
---              PD.Cost := (Money)(2) * (Money)(PD.Pumped);
+              PD.Cost := Money(2.00 * float(PD.Pumped));
             Forecourt.PU_1_Data.Set_Data(PD);
          end if;
 
@@ -127,9 +125,16 @@ package body Pump_Units is
          -- Check pump 6 for events
          D := Forecourt.P6.Get_Data;
 
-         if not PD.Responded then
+         if not D.Responded then
             FSMs.Event(PD.FSM, D.Cur_Event); -- Send the event to FSM
             D.Responded := True; -- Update the data
+            Forecourt.P6.Set_Data(D); -- Set the data
+         end if;
+
+
+         -- If we have not responded to the event, respond and set responded to true
+         if not PD.Responded then
+            FSMs.Event(PD.FSM,PD.E);
 
             -- Check if the transaction should be cleated
             if PD.E = CLEAR then
@@ -137,7 +142,15 @@ package body Pump_Units is
                PD.Pumped := 0.00;
             end if;
 
-            Forecourt.P6.Set_Data(D); -- Set the data
+            PD.Responded := True;
+            forecourt.PU_2_Data.Set_Data(PD);
+         end if;
+
+         -- Check if fueling if so increment cost and amount
+         if FSMs.Get_State(PD.FSM) = FUELING then
+            PD.Pumped := PD.Pumped + 0.01;
+              PD.Cost := Money(2.00 * float(PD.Pumped));
+            Forecourt.PU_2_Data.Set_Data(PD);
          end if;
 
       end loop;
