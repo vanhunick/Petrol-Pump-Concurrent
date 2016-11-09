@@ -5,7 +5,7 @@ package body FSMs with SPARK_Mode => on is
    function Create return Pump_FSM is
       Pump : Pump_FSM;
    begin
-      Pump.Cur_State := INOPRATIVE;
+      Pump.Cur_State := IDLE; --CHANGE LATER
       return Pump;
    end Create;
 

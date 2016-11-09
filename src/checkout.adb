@@ -30,6 +30,7 @@ package body Checkout is
 
    -- Activates a pump unit
    procedure Activate_Pump_Unit(Unit : Positive) is
+      PD : Pump_Unit_Data;
    begin
       if Unit = 1 then
          PD := Forecourt.PU_1_Data.Get_Data;
@@ -48,6 +49,7 @@ package body Checkout is
 
     -- Activates a pump unit
    procedure Terminate_Pump_Unit(Unit : Positive) is
+      PD : Pump_Unit_Data;
    begin
       if Unit = 1 then
          PD := Forecourt.PU_1_Data.Get_Data;

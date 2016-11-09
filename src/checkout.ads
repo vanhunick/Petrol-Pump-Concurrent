@@ -12,10 +12,10 @@ package Checkout is
 
 
 private
-   P_Unit1 : Pump_Unit;
-   P_Unit2 : Pump_Unit;
-
-   PU1_Balance : Money;
-   PU2_Balance : Money;
+--     P_Unit1 : Pump_Unit;
+--     P_Unit2 : Pump_Unit;
+--
+--     PU1_Balance : Money;
+--     PU2_Balance : Money;
 
 end Checkout;

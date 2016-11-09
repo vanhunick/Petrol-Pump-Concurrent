@@ -20,6 +20,7 @@ package Pump_Units is
 
       Pumped : Fuel_Litre :=0.00;
       Cost : Money :=0.00;
+      Cur_State : Custom_Types.State := IDLE;
    end record;
 
    -- Protected data for each of the pump units

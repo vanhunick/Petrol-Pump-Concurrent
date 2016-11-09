@@ -5,6 +5,7 @@ with System; use System;
 with Epoch; use Epoch;
 with Pump_Units; use Pump_Units;
 with Ada.Real_Time; use Ada.Real_Time;
+with Text_IO; use Text_IO;
 
 package body Pump_Units is
 
@@ -79,6 +80,11 @@ package body Pump_Units is
             Forecourt.PU_1_Data.Set_Data(PD);
          end if;
 
+         Put_Line("State " & Get_State(PD.FSM)'Image);
+         PD := Forecourt.PU_1_Data.Get_Data;
+         PD.Cur_State := Get_State(PD.FSM);
+         Forecourt.PU_1_Data.Set_Data(PD);
+
 
       end loop;
    end Pump_Unit_1_Task;
@@ -141,7 +147,6 @@ package body Pump_Units is
                PD.Cost := 0.00;
                PD.Pumped := 0.00;
             end if;
-
             PD.Responded := True;
             forecourt.PU_2_Data.Set_Data(PD);
          end if;

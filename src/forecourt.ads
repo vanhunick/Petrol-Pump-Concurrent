@@ -6,6 +6,7 @@ with FSMs; use FSMs;
 with Ada.Synchronous_Task_Control; use Ada.Synchronous_Task_Control;
 with Custom_Types; use Custom_Types;
 with Pump_Units; use Pump_Units;
+with Checkout; use Checkout;
 
 package forecourt is
 
@@ -34,15 +35,15 @@ package forecourt is
    PU_2_Data : Protected_Pump_Unit_Data;
 
    -- Tasks for each of the pumps
-   Pump1 : Pump_1_Task(10,100);
-   Pump2 : Pump_2_Task(10,100);
-   Pump3 : Pump_3_Task(10,100);
-   Pump4 : Pump_4_Task(10,100);
-   Pump5 : Pump_5_Task(10,100);
-   Pump6 : Pump_6_Task(10,100);
+   Pump1 : Pump_1_Task(10,1_000_000);
+   Pump2 : Pump_2_Task(10,1_000_000);
+   Pump3 : Pump_3_Task(10,1_000_000);
+   Pump4 : Pump_4_Task(10,1_000_000);
+   Pump5 : Pump_5_Task(10,1_000_000);
+   Pump6 : Pump_6_Task(10,1_000_000);
 
-   PU_1_Task : Pump_Unit_1_Task(10,100);
-   PU_2_Task : Pump_Unit_2_Task(10,100);
+   PU_1_Task : Pump_Unit_1_Task(10,1_000_000);
+   PU_2_Task : Pump_Unit_2_Task(10,1_000_000);
 
 
 
