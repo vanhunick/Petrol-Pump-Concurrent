@@ -101,37 +101,16 @@ package body Pump_Units is
       end loop;
    end Pump_Unit_2_Task;
 
+   -- Protected object to send data to the pump units
+   protected body Pump_Unit_Data is
 
-   -- Protected record for induvidual pump data
-   protected body Protected_Record is
+      function Get_Data return Pump_Unit_Data is (Data);
 
-      function Get_Data return Pump_Data is (Data);
-
-      procedure Set_Data(PD : Pump_Data) is
+      procedure Set_Data(D : Pump_Unit_Data) is
       begin
-         Data := PD;
+         Data := D;
       end Set_Data;
 
-   end Protected_Record;
-
-   -- Protected object to send data to the pump unit 1
-   protected body Pump_Unit_1 is
-
-      procedure Event(E : Custom_Types.Event) is
-      begin
-         FSMs.Event(FSM,E);
-      end Event;
-
-   end Pump_Unit_1;
-
-   -- Protected object to send data to the pump unit 2
-   protected body Pump_Unit_2 is
-
-      procedure Event(E : Custom_Types.Event) is
-      begin
-         FSMs.Event(FSM,E);
-      end Event;
-
-   end Pump_Unit_1;
+   end Pump_Unit_Data;
 
 end Pump_Units;

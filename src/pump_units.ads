@@ -11,45 +11,29 @@ with FSMs; use FSMs;
 
 package Pump_Units is
 
-   -- Event and state daya for each pump
-   type Pump_Data is record
+
+   -- Event and state daya for each pump unit
+   type Pump_Unit_Data is record
       FSM : Pump_FSM := FSMs.create;
-      Cur_Event : Custom_Types.Event := Terminate_FP;
+      E : Custom_Types.Event;
       Responded : Boolean := True;
-      Pumping_Fuel : Boolean := False;
+
+      Data_P1 : Protected_Pump_Data;
+      Data_P2 : Protected_Pump_Data;
+      Data_P3 : Protected_Pump_Data;
+
    end record;
 
-   -- Protected wrapper for pump data
-   protected type Protected_Record is
+   -- Protected data for each of the pump units
+   protected type Protected_Pump_Unit_Data is
 
       function Get_Data return Pump_Data;
 
-      procedure Set_Data(PD : Pump_Data);
+      procedure Set_Data(Data : Pump_Unit_Data);
 
    private
-      Data : Pump_Data;
-   end Protected_Record;
-
-
-   protected type Pump_Unit_1 is
-
---      function Get_Data return Pump_Data;
-
-      -- Procedure used to activate or deactivate a pump
-      --procedure Activate_Pump(Activate : Boolean);
-
-      procedure Event(E : Custom_Types.Event);
-
-   private
-      Data_P1 : Pump_Data;
-      Data_P2 : Pump_Data;
-      Data_P3 : Pump_Data;
-
-      FSM : Pump_FSM;
-
-      -- Cam asses the global data objects
-   end Pump_Unit_1;
-
+      Data : Pump_Unit_Data;
+   end Protected_Pump_Unit_Data;
 
    -- Create a task that checks for changes to data
    task type Pump_Unit_1_Task(Pri: System.Priority; Cycle_Time : Positive);

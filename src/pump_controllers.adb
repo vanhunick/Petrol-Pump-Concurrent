@@ -11,6 +11,19 @@ with Pump_Units; use Pump_Units;
 
 package body Pump_Controllers is
 
+      -- Protected record for induvidual pump data
+   protected body Protected_Record is
+
+      function Get_Data return Pump_Data is (Data);
+
+      procedure Set_Data(PD : Pump_Data) is
+      begin
+         Data := PD;
+      end Set_Data;
+
+   end Protected_Record;
+
+
    task body Pump_1_Task is
       D : Pump_Data; -- Temp pump data
 

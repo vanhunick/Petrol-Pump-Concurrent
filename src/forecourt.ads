@@ -22,12 +22,12 @@ package forecourt is
    FSM2 : Pump_FSM := FSMs.create;
 
    -- Records for each of the pumps
-   P1 : Protected_Record;
-   P2 : Protected_Record;
-   P3 : Protected_Record;
-   P4 : Protected_Record;
-   P5 : Protected_Record;
-   P6 : Protected_Record;
+   P1 : Protected_Pump_Data;
+   P2 : Protected_Pump_Data;
+   P3 : Protected_Pump_Data;
+   P4 : Protected_Pump_Data;
+   P5 : Protected_Pump_Data;
+   P6 : Protected_Pump_Data;
 
 
    -- Tasks for each of the pumps
@@ -39,9 +39,7 @@ package forecourt is
    Pump6 : Pump_6_Task(10,100);
 
    -- Tasks for the two pump units
-   PU_1 : Pump_Unit_1;
-   PU_2 : Pump_Unit_2;
-
-
+   PU_1_Data : Protected_Pump_Unit_Data;
+   PU_2_Data : Protected_Pump_Unit_Data;
 
 end forecourt;

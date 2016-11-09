@@ -4,8 +4,30 @@ pragma Partition_Elaboration_Policy (Sequential);
 with Custom_Types;
 with System;
 with Ada.Real_Time;  use Ada.Real_Time;
+with FSMs; use FSMs;
 
 package Pump_Controllers is
+
+   -- Event and state daya for each pump
+   type Pump_Data is record
+      Cur_Event : Custom_Types.Event := Custom_Types.TERMINATE_FP;
+      Responded : Boolean := True;
+      Pumping_Fuel : Boolean := False;
+   end record;
+
+
+   -- Protected wrapper for pump data
+   protected type Protected_Pump_Data is
+
+      function Get_Data return Pump_Data;
+
+      procedure Set_Data(PD : Pump_Data);
+
+   private
+      Data : Pump_Data;
+   end Protected_Pump_Data;
+
+
 
    -- Tasks for pumps
 
