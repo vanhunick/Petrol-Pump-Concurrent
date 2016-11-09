@@ -7,6 +7,7 @@ with FSMs; use FSMs;
 with System; use System;
 with Epoch; use Epoch;
 with Pump_Units; use Pump_Units;
+with Text_IO; use Text_IO;
 
 
 package body Pump_Controllers is

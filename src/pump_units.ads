@@ -15,11 +15,11 @@ package Pump_Units is
    -- Event and state daya for each pump unit
    type Pump_Unit_Data is record
       FSM : Pump_FSM := FSMs.create;
-      E : Custom_Types.Event;
+      E : Custom_Types.Event := TERMINATE_FP;
       Responded : Boolean := True;
 
-      Pumped : Fuel_Litre;
-      Cost : Money;
+      Pumped : Fuel_Litre :=0.00;
+      Cost : Money :=0.00;
    end record;
 
    -- Protected data for each of the pump units

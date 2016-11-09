@@ -78,6 +78,11 @@ package body FSMs with SPARK_Mode => on is
       end case;
    end Event;
 
+   procedure Clear(Pump : in out Pump_FSM) is
+   begin
+      Event(Pump,CLEAR);
+   end Clear;
+
    procedure Minor_Error(Pump : in out Pump_FSM) is
    begin
       Event(Pump,MINOR_ERROR);

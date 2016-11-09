@@ -10,8 +10,8 @@ package Pump_Controllers is
 
    -- Event and state daya for each pump
    type Pump_Data is record
-      Cur_Event : Custom_Types.Event := Custom_Types.TERMINATE_FP;
-      Responded : Boolean := True;
+      Cur_Event    : Custom_Types.Event := Custom_Types.TERMINATE_FP;
+      Responded    : Boolean := True;
       Pumping_Fuel : Boolean := False;
    end record;
 
