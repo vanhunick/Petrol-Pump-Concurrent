@@ -18,18 +18,16 @@ package Pump_Units is
       E : Custom_Types.Event;
       Responded : Boolean := True;
 
-      Data_P1 : Protected_Pump_Data;
-      Data_P2 : Protected_Pump_Data;
-      Data_P3 : Protected_Pump_Data;
-
+      Pumped : Fuel_Litre;
+      Cost : Money;
    end record;
 
    -- Protected data for each of the pump units
    protected type Protected_Pump_Unit_Data is
 
-      function Get_Data return Pump_Data;
+      function Get_Data return Pump_Unit_Data;
 
-      procedure Set_Data(Data : Pump_Unit_Data);
+      procedure Set_Data(D : Pump_Unit_Data);
 
    private
       Data : Pump_Unit_Data;
@@ -38,11 +36,5 @@ package Pump_Units is
    -- Create a task that checks for changes to data
    task type Pump_Unit_1_Task(Pri: System.Priority; Cycle_Time : Positive);
    task type Pump_Unit_2_Task(Pri: System.Priority; Cycle_Time : Positive);
-
-
-
-
-
-
 
 end Pump_Units;

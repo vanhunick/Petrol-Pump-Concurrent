@@ -9,6 +9,9 @@ package body FSMs with SPARK_Mode => on is
       return Pump;
    end Create;
 
+   function Get_State(FSM : Pump_FSM) return State is (FSM.Cur_State);
+
+
 
    procedure Event(Pump : in out Pump_FSM; E : in Custom_Types.Event) is
    begin

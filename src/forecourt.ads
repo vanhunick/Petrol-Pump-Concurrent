@@ -29,6 +29,9 @@ package forecourt is
    P5 : Protected_Pump_Data;
    P6 : Protected_Pump_Data;
 
+   -- Tasks for the two pump units
+   PU_1_Data : Protected_Pump_Unit_Data;
+   PU_2_Data : Protected_Pump_Unit_Data;
 
    -- Tasks for each of the pumps
    Pump1 : Pump_1_Task(10,100);
@@ -38,8 +41,10 @@ package forecourt is
    Pump5 : Pump_5_Task(10,100);
    Pump6 : Pump_6_Task(10,100);
 
-   -- Tasks for the two pump units
-   PU_1_Data : Protected_Pump_Unit_Data;
-   PU_2_Data : Protected_Pump_Unit_Data;
+   PU_1_Task : Pump_Unit_1_Task(10,100);
+   PU_2_Task : Pump_Unit_2_Task(10,100);
+
+
+
 
 end forecourt;

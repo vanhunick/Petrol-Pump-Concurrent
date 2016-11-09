@@ -10,6 +10,9 @@ package FSMs with SPARK_Mode => on is
    procedure Event(Pump : in out Pump_FSM; E : in Event);
 
 
+   function Get_State(FSM : Pump_FSM) return State;
+
+
    -- Create procedures for all of the possible events/interupts
    procedure Minor_Error(Pump : in out Pump_FSM);
    procedure Major_Error(Pump : in out Pump_FSM);
@@ -28,6 +31,7 @@ package FSMs with SPARK_Mode => on is
    procedure Limit_Reached(Pump : in out Pump_FSM);
 
 private
+
 
    procedure Set_State(Pump : in out Pump_FSM; S : State);
 
