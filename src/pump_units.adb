@@ -10,47 +10,16 @@ with Ada.Real_Time; use Ada.Real_Time;
 
 package body Pump_Units is
 
---     -- A task for the first pump unit
---     task body Pump_Unit_1_Task is
---        D : Pump_Data; -- Temp pump data
---
---        Next_Period : Ada.Real_Time.Time;
---        Period : constant Ada.Real_Time.Time_Span := Ada.Real_Time.Microseconds(Cycle_Time);
---        Hang_Period : constant Ada.Real_Time.Time_Span := Ada.Real_Time.Microseconds(Cycle_Time *10);
---        Start_Epoch : Ada.Real_Time.Time := Epoch.PEpoch.Start_Time;
---
---     begin
---
---        Next_Period := Start_Epoch + Period;
---
---        loop
---           delay until Next_Period;
---           Next_Period := Next_Period + Period;
---
---           D := Forecourt.P1.Get_Data;
---
---           if not D.Responded then
---              FSMS.Event(D.FSM, D.Cur_Event); -- Send the event to FSM
---              D.Responded := True; -- Update the data
---              Forecourt.P1.Set_Data(D); -- Set the data
---           end if;
---
---        end loop;
---     end Pump_Unit_1_Task;
-
-
-      task body Pump_Unit_1_Task is
+   -- Task for the first pump unit
+   task body Pump_Unit_1_Task is
       D : Pump_Data; -- Temp pump data
 
       Next_Period : Ada.Real_Time.Time;
       Period : constant Ada.Real_Time.Time_Span := Ada.Real_Time.Microseconds(Cycle_Time);
       Hang_Period : constant Ada.Real_Time.Time_Span := Ada.Real_Time.Microseconds(Cycle_Time *10);
       Start_Epoch : Ada.Real_Time.Time := Epoch.PEpoch.Start_Time;
-
    begin
-
       Next_Period := Start_Epoch + Period;
-
       loop
          delay until Next_Period;
          Next_Period := Next_Period + Period;
@@ -96,7 +65,6 @@ package body Pump_Units is
       Start_Epoch : Ada.Real_Time.Time := Epoch.PEpoch.Start_Time;
 
    begin
-
       Next_Period := Start_Epoch + Period;
 
       loop
@@ -145,5 +113,25 @@ package body Pump_Units is
       end Set_Data;
 
    end Protected_Record;
+
+   -- Protected object to send data to the pump unit 1
+   protected body Pump_Unit_1 is
+
+      procedure Event(E : Custom_Types.Event) is
+      begin
+         FSMs.Event(FSM,E);
+      end Event;
+
+   end Pump_Unit_1;
+
+   -- Protected object to send data to the pump unit 2
+   protected body Pump_Unit_2 is
+
+      procedure Event(E : Custom_Types.Event) is
+      begin
+         FSMs.Event(FSM,E);
+      end Event;
+
+   end Pump_Unit_1;
 
 end Pump_Units;

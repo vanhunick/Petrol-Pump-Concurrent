@@ -32,8 +32,4 @@ package body Displays with SPARK_Mode => on is
       D.Amount_3 := Amount;
    end Set_Amount_3;
 
-
-
-
-
 end Displays;

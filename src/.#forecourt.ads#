@@ -42,6 +42,4 @@ package forecourt is
    PU_1 : Pump_Unit_1;
    PU_2 : Pump_Unit_2;
 
-
-
 end forecourt;

@@ -1,7 +1,6 @@
 pragma Profile (Ravenscar);
 pragma Partition_Elaboration_Policy (Sequential);
 
-
 with Custom_Types; use Custom_Types;
 with Forecourt; use Forecourt;
 with FSMs; use FSMs;
@@ -12,14 +11,13 @@ with Pump_Units; use Pump_Units;
 
 package body Pump_Controllers is
 
-
    task body Pump_1_Task is
       D : Pump_Data; -- Temp pump data
 
       -- Time update fields
       Next_Period : Ada.Real_Time.Time;
       Period : constant Ada.Real_Time.Time_Span := Ada.Real_Time.Microseconds(Cycle_Time);
-      Hang_Period : constant Ada.Real_Time.Time_Span := Ada.Real_Time.Microseconds(Cycle_Time *10);
+      Hang_Period : constant Ada.Real_Time.Time_Span := Ada.Real_Time.Microseconds(Cycle_Time*10);
       Start_Epoch : Ada.Real_Time.Time := Epoch.PEpoch.Start_Time;
 
       -- Represents events going of in the pump

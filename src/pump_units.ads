@@ -33,15 +33,18 @@ package Pump_Units is
 
    protected type Pump_Unit_1 is
 
-      function Get_Data return Pump_Data;
+--      function Get_Data return Pump_Data;
 
       -- Procedure used to activate or deactivate a pump
-      procedure Activate_Pump(Activate : Boolean);
+      --procedure Activate_Pump(Activate : Boolean);
 
-      --procedure Event(E : Custom_Types.Event);
+      procedure Event(E : Custom_Types.Event);
 
    private
-      Data : Pump_Data;
+      Data_P1 : Pump_Data;
+      Data_P2 : Pump_Data;
+      Data_P3 : Pump_Data;
+
       FSM : Pump_FSM;
 
       -- Cam asses the global data objects
@@ -49,7 +52,9 @@ package Pump_Units is
 
 
    -- Create a task that checks for changes to data
-   task type Pump_Unit_1_Task(Pri: System.Priority; C_Time : Positive);
+   task type Pump_Unit_1_Task(Pri: System.Priority; Cycle_Time : Positive);
+   task type Pump_Unit_2_Task(Pri: System.Priority; Cycle_Time : Positive);
+
 
 
 
