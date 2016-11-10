@@ -66,4 +66,24 @@ package body Checkout is
       end if;
    end Terminate_Pump_Unit;
 
+   -- Opens a pump unit
+   procedure Open_Pump_Unit(Unit : Positive) is
+      PD : Pump_Unit_Data;
+   begin
+      if Unit = 1 then
+         PD := Forecourt.PU_1_Data.Get_Data;
+         PD.E := Custom_Types.OPEN_FP; -- Set event to authorised
+         PD.Responded := False; -- Now when the pump unit checks it will repond to the event
+         Forecourt.PU_1_Data.Set_Data(PD);
+      end if;
+
+      if Unit = 2 then
+         PD := Forecourt.PU_2_Data.Get_Data;
+         PD.E := Custom_Types.OPEN_FP; -- Set event to authorised
+         PD.Responded := False; -- Now when the pump unit checks it will repond to the event
+         Forecourt.PU_2_Data.Set_Data(PD);
+      end if;
+   end Open_Pump_Unit;
+
+
 end Checkout;

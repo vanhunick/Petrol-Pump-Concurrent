@@ -14,8 +14,6 @@ with Epoch; use Epoch;
 procedure test is
    PD : Pump_Data;
    PUD : Pump_Unit_Data;
---     The_Checkout : Checkout;
-
    Start_Epoch : Ada.Real_Time.Time := Epoch.PEpoch.Start_Time;
    Next_Period : Ada.Real_Time.Time;
    Period : constant Ada.Real_Time.Time_Span := Ada.Real_Time.Microseconds(5_000_000);
@@ -38,6 +36,7 @@ begin
    Checkout.Activate_Pump_Unit(1);
 
    Next_Period := Start_Epoch + Period;
+
 
    delay until Next_Period;
 

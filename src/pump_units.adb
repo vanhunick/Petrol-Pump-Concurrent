@@ -164,8 +164,6 @@ package body Pump_Units is
             Forecourt.PU_2_Data.Set_Data(PD);
          end if;
 
-
-
          Put_Line("State " & Get_State(PD.FSM)'Image);
          PD := Forecourt.PU_1_Data.Get_Data;
 

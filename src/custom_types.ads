@@ -1,12 +1,10 @@
 package Custom_Types with SPARK_Mode => on is
 
+   -- Type for the money it costs for fuel
    type Money is digits 2;
 
+   -- Type for fuel pumped
    type Fuel_Litre is digits 10 range 0.00 .. 10000000.00;
-
-
-
---     type Suspend_Ob is access Suspension_Object;
 
    -- The possible states
    type State is (
