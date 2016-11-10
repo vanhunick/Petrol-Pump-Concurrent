@@ -6,6 +6,7 @@ with Epoch; use Epoch;
 with Pump_Units; use Pump_Units;
 with Ada.Real_Time; use Ada.Real_Time;
 with Text_IO; use Text_IO;
+with Displays; use Displays;
 
 package body Pump_Units is
 
@@ -82,6 +83,11 @@ package body Pump_Units is
 
          Put_Line("State " & Get_State(PD.FSM)'Image);
          PD := Forecourt.PU_1_Data.Get_Data;
+
+         -- Set the display of the pump
+         Displays.Set_Cost(Forecourt.Display_1,PD.Cost);
+         Displays.Set_Amount_Pumped(Forecourt.Display_1,PD.Pumped);
+
          PD.Cur_State := Get_State(PD.FSM);
          Forecourt.PU_1_Data.Set_Data(PD);
 
@@ -157,6 +163,18 @@ package body Pump_Units is
               PD.Cost := Money(2.00 * float(PD.Pumped));
             Forecourt.PU_2_Data.Set_Data(PD);
          end if;
+
+
+
+         Put_Line("State " & Get_State(PD.FSM)'Image);
+         PD := Forecourt.PU_1_Data.Get_Data;
+
+         -- Set the display of the pump
+         Displays.Set_Cost(Forecourt.Display_2,PD.Cost);
+         Displays.Set_Amount_Pumped(Forecourt.Display_2,PD.Pumped);
+
+         PD.Cur_State := Get_State(PD.FSM);
+         Forecourt.PU_2_Data.Set_Data(PD);
 
       end loop;
    end Pump_Unit_2_Task;
