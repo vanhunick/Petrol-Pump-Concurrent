@@ -20,6 +20,7 @@ procedure test is
 
 
 begin
+   -- Sets the starting data for the pumps
    P1.Set_Data(PD);
    P2.Set_Data(PD);
    P3.Set_Data(PD);
@@ -27,13 +28,18 @@ begin
    P5.Set_Data(PD);
    P5.Set_Data(PD);
 
+   -- Sets the starting data for the pump units
    PU_1_Data.Set_Data(PUD);
    PU_2_Data.Set_Data(PUD);
+
 
    Put_Line("Pump Unit 1 " & PU_1_Data.Get_Data.Cur_State'Image);
    Put_Line("Pump Unit 2 " & PU_2_Data.Get_Data.Cur_State'Image);
 
-   Checkout.Activate_Pump_Unit(1);
+
+   Checkout.Open_Pump_Unit(1);
+
+   Checkout.Open_Pump_Unit(2);
 
    Next_Period := Start_Epoch + Period;
 

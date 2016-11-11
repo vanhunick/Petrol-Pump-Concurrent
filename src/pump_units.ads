@@ -9,7 +9,7 @@ with System; use System;
 with FSMs; use FSMs;
 
 
-package Pump_Units is
+package Pump_Units with SPARK_Mode => on is
 
 
    -- Event and state daya for each pump unit

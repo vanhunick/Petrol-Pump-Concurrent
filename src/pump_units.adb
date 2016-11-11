@@ -8,7 +8,7 @@ with Ada.Real_Time; use Ada.Real_Time;
 with Text_IO; use Text_IO;
 with Displays; use Displays;
 
-package body Pump_Units is
+package body Pump_Units with SPARK_Mode => on  is
 
    -- Task for the first pump unit
    task body Pump_Unit_1_Task is
@@ -17,7 +17,7 @@ package body Pump_Units is
 
       Next_Period : Ada.Real_Time.Time;
       Period : constant Ada.Real_Time.Time_Span := Ada.Real_Time.Microseconds(Cycle_Time);
-      Hang_Period : constant Ada.Real_Time.Time_Span := Ada.Real_Time.Microseconds(Cycle_Time *10);
+      Hang_Period : constant Ada.Real_Time.Time_Span := Ada.Real_Time.Microseconds(Cycle_Time * 10);
       Start_Epoch : Ada.Real_Time.Time := Epoch.PEpoch.Start_Time;
    begin
       Next_Period := Start_Epoch + Period;
@@ -54,11 +54,6 @@ package body Pump_Units is
             D.Responded := True; -- Update the data
             Forecourt.P3.Set_Data(D); -- Set the data
          end if;
-
-
-
-
-
 
          -- If we have not responded to the event, respond and set responded to true
          if not PD.Responded then
